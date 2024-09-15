@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19.0.0-rc-206df66e-20240912",
+    "react-dom": "^19.0.0-rc-206df66e-20240912"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
@@ -21,6 +21,7 @@
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-de2cfda-20240912",
     "globals": "^15.9.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",

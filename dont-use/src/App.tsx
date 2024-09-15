@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { SetStateAction, useState } from "react";
+import { Todo } from "./types";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ padding: "12px" }}>
+      <Title title="何もしない" />
+      <TodoAdd setTodos={setTodos} />
+      <TodoList todos={todos} setTodos={setTodos} />
+    </div>
+  );
 }
 
-export default App
+const Title = (props: { title: string }) => {
+  const { title } = props;
+
+  return <h1>{title}</h1>;
+};
+
+const TodoAdd = (props: {
+  setTodos: React.Dispatch<SetStateAction<Todo[]>>;
+}) => {
+  const { setTodos } = props;
+  const [text, setText] = useState("");
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (text === "") return;
+    setTodos((todos) => [...todos, { id: todos.length, text }]);
+    setText("");
+  };
+
+  return (
+    <form>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <button onClick={handleClick} type="submit">
+        追加
+      </button>
+    </form>
+  );
+};
+const TodoList = (props: {
+  todos: Todo[];
+  setTodos: React.Dispatch<SetStateAction<Todo[]>>;
+}) => {
+  const { todos, setTodos } = props;
+  const getHandleClick = (id: number) => () => {
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  };
+
+  return (
+    <ul>
+      {todos.map(({ id, text }) => (
+        <li key={id}>
+          {text}
+          <button onClick={getHandleClick(id)}>削除</button>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default App;
