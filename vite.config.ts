@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [
     react({
       babel: {
+        // ここをコメントアウトするとReact-Compilerを無効にできる
         plugins: [["babel-plugin-react-compiler"]],
       },
     }),
